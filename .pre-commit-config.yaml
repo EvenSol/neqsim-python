@@ -10,6 +10,9 @@ repos:
         exclude: ^conda/meta\.yaml$
     -   id: check-added-large-files
 -   repo: https://github.com/psf/black
-    rev: 24.10.0
+    # Keep this in sync with the black version in pyproject.toml's dev group
+    # (black>=26.0,<27.0). A mismatch causes local pre-commit formatting to
+    # differ from the CI check and makes files drift out of format.
+    rev: 26.5.1
     hooks:
     -   id: black

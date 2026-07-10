@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../../../neqsim"
+		},
+		{
+			"path": "../../../neqsim-feedstock"
 		}
 	],
 	"settings": {

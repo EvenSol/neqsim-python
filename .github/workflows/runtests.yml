@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     runs-on: ubuntu-latest
     # 3.14 is very new; don't fail the whole matrix while the ecosystem catches up.
     continue-on-error: ${{ matrix.version == '3.14' }}

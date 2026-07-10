@@ -252,7 +252,9 @@ def refresh() -> int:
     return len(_all_class_names())
 
 
-def list_classes(package_prefix: str = _ROOT_PACKAGE, recursive: bool = True) -> List[str]:
+def list_classes(
+    package_prefix: str = _ROOT_PACKAGE, recursive: bool = True
+) -> List[str]:
     """List Java class names under a package.
 
     Args:

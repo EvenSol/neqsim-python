@@ -24,7 +24,7 @@ conda install -c conda-forge neqsim=<version>
 
 Requirements:
 
-- Python 3.9 or newer.
+- Python 3.10 or newer.
 - Java 17 or newer for pip installs. Download from [Adoptium](https://adoptium.net/).
 - Conda installs include OpenJDK through conda-forge.
 

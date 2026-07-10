@@ -3,13 +3,12 @@ name = "neqsim"
 version = "3.15.0"
 description = "NeqSim is a tool for thermodynamic and process calculations"
 authors = [{ name = "Even Solbraa", email = "esolbraa@gmail.com" }]
-requires-python = ">=3.9,<4"
+requires-python = ">=3.10,<4"
 readme = "README.md"
 license = "Apache-2.0"
 classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -38,7 +37,13 @@ Repository = "https://github.com/Equinor/neqsim-python"
 
 [dependency-groups]
 dev = [
-    "black>=25.0,<28.0",
+    # Pin black to a single stable-style major (26.x). Black's stable
+    # formatting style changes with each yearly major (25 -> 26 -> 27), so a
+    # wider range let CI silently pick up a new style and reformat files that
+    # were formatted locally. black 26+ requires Python >=3.10 (see
+    # requires-python). Keep this in sync with the black rev in
+    # .pre-commit-config.yaml.
+    "black>=26.0,<27.0",
     "pytest>=8.0.0,<9",
     "pre-commit>=3.6.0,<4",
     "stubgenj>=0.2.12,<0.3",
@@ -63,6 +68,16 @@ source-include = [
 [build-system]
 requires = ["uv_build>=0.11.18,<0.12.0"]
 build-backend = "uv_build"
+
+[tool.black]
+# Pin the target Python versions so formatting is deterministic across Black
+# releases and does not depend on per-file auto-detection (which can drift, e.g.
+# detecting py315 features, and emit a safety-check warning). Black's safety
+# check parses its output with the running interpreter against the HIGHEST target
+# listed, so the top of this list is capped at py313 to match the Python version
+# used by the CI formatting job (avoids a spurious "cannot parse" warning).
+# Running on Python 3.14 still parses py313-formatted code fine.
+target-version = ["py310", "py311", "py312", "py313"]
 
 [tool.mypy]
 mypy_path = "src"

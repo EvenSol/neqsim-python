@@ -88,7 +88,10 @@ def _stream_html(self: Any) -> str:
             ("Phases", _fmt(_safe(getattr(fluid, "getNumberOfPhases", None)), 0))
         )
         rows.append(
-            ("Density [kg/m3]", _fmt(_safe(getattr(fluid, "getDensity", None), "kg/m3")))
+            (
+                "Density [kg/m3]",
+                _fmt(_safe(getattr(fluid, "getDensity", None), "kg/m3")),
+            )
         )
     body = "".join(
         f"<tr><td style='text-align:left'>{k}</td>"

@@ -7,7 +7,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python>=3.9
+  - python>=3.10
   - openjdk>=17
   - jpype1>=1.7.0,<2.0.0
   - numpy>1.25.2
