@@ -56,13 +56,17 @@ def generate(spec: str, out_dir: Path, overwrite: bool) -> int:
         The subprocess exit code.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
-    source_flag = "--url" if spec.startswith(("http://", "https://")) else "--path"
-    mode = "--overwrite" if overwrite else "--meta"
+    is_url = spec.startswith(("http://", "https://"))
+    if is_url:
+        source_flag, source_value = "--url", spec
+    else:
+        # Resolve to an absolute path so it still works with cwd=out_dir.
+        source_flag, source_value = "--path", str(Path(spec).resolve())
     cmd: List[str] = [
         "openapi-python-client",
         "generate",
         source_flag,
-        spec,
+        source_value,
     ]
     if overwrite:
         cmd.append("--overwrite")
