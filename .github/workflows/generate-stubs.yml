@@ -40,8 +40,12 @@ jobs:
         run: |
           uv run python scripts/generate_stubs.py
 
-      - name: Commit updated stubs
+      - name: Generate offline API manifest
+        run: |
+          uv run python scripts/generate_api_manifest.py
+
+      - name: Commit updated stubs and manifest
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "chore: regenerate Java stubs"
-          file_pattern: "src/jneqsim/**/*.pyi"
+          commit_message: "chore: regenerate Java stubs and API manifest"
+          file_pattern: "src/jneqsim-stubs/**/*.pyi src/neqsim/data/neqsim_api.json.gz"

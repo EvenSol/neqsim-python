@@ -155,3 +155,12 @@ def open_xml(filename):
         xml_content = f.read()
     neqsimobj = streamer.fromXML(xml_content)
     return neqsimobj
+
+
+# Best-effort: attach rich Jupyter HTML display to streams/processes.
+try:
+    from neqsim import display as _display
+
+    _display.register()
+except Exception:
+    pass

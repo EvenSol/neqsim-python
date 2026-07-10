@@ -217,6 +217,84 @@ print(f"Compressor power: {comp.getPower()/1e6:.2f} MW")
 | Configuration-driven design | ProcessBuilder |
 | Advanced Java features | Direct Java access |
 
+> **The `jneqsim` gateway is the first-class path for the long tail.** Only a
+> curated subset of NeqSim's ~2500 Java classes has hand-written Python
+> wrappers. Mechanical design, safety, field development, automation, and most
+> specialized equipment are used directly through `jneqsim` — no wrapper needed.
+
+---
+
+## 🔎 Discovering the Full API
+
+Direct `jneqsim` access is powerful but hard to explore (a `JPackage` has no
+autocomplete). The `neqsim.discovery` module scans the API at runtime so you can
+list, search, and inspect every class from Python:
+
+```python
+from neqsim import discovery
+
+discovery.list_equipment()                 # every process-equipment class
+discovery.list_packages('process')         # sub-packages of neqsim.process
+discovery.find_classes('scrubber')         # search the whole API by keyword
+print(discovery.describe('Compressor'))    # constructors + methods via reflection
+
+Compressor = discovery.get_class('Compressor')   # JClass by simple or full name
+```
+
+For IDE autocomplete and type checking across the entire Java API, generate type
+stubs (already packaged as `jneqsim-stubs`, regenerate with
+`python scripts/generate_stubs.py`) and point your editor at `src`. An offline
+API manifest (`python scripts/generate_api_manifest.py`) lets `discovery` list,
+search, and describe classes instantly and JVM-free.
+
+### Typed, validated flowsheets (optional)
+
+With `pip install "neqsim[schema]"` you can build flowsheets from typed
+[pydantic](https://docs.pydantic.dev) models — autocomplete and validation
+*before* the JVM runs:
+
+```python
+from neqsim.process.schema import ProcessModel, Fluid, Unit
+
+model = ProcessModel(
+    fluid=Fluid(eos="srk", components={"methane": 0.9, "ethane": 0.1}),
+    process=[
+        Unit(type="Stream", name="feed",
+             properties={"flowRate": [50000.0, "kg/hr"], "pressure": [50.0, "bara"]}),
+        Unit(type="Separator", name="HP Sep", inlet="feed"),
+    ],
+)
+result = model.run()           # validates, builds, and runs
+```
+
+### Component-name helpers
+
+```python
+from neqsim.thermo.components import find_components, suggest_component
+find_components("glycol")            # search the component database
+suggest_component("methan")          # ['methane', 'methanol', ...] — catch typos
+```
+
+### Rich Jupyter display
+
+Streams and processes render as HTML tables in notebooks automatically (just
+display the object) — no extra call needed.
+
+### Results to pandas
+
+One helper turns any process into a tidy stream table (works for every
+equipment type, because it walks the flowsheet's streams):
+
+```python
+from neqsim.process import stream_table, equipment_table, runProcess
+
+runProcess()
+stream_table()        # one row per stream: flow, T, P, phases, density, molar mass
+equipment_table()     # one row per unit: name, type, inlet/outlet counts
+
+stream_table(my_process)   # or pass an explicit ProcessSystem / ProcessContext
+```
+
 ---
 
 ## 🧪 PVT Simulation
