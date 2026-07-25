@@ -5239,10 +5239,9 @@ def flarestack(name: str, inlet_stream: Any = None) -> Any:
         >>> flare.setStackHeight(60.0)  # meters
         >>> runProcess()
     """
+    flare = jneqsim.process.equipment.flare.FlareStack(name)
     if inlet_stream is not None:
-        flare = jneqsim.process.equipment.flare.FlareStack(name, inlet_stream)
-    else:
-        flare = jneqsim.process.equipment.flare.FlareStack(name)
+        flare.setReliefInlet(inlet_stream)
     if not _loop_mode:
         processoperations.add(flare)
     return flare

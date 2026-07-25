@@ -4,6 +4,7 @@ from neqsim.process.processTools import (
     separator,
     pump,
     heater,
+    flarestack,
     separator3phase,
     compsplitter,
     set_loop_mode,
@@ -522,3 +523,16 @@ def test_loop_mode():
     assert hydrateDewPoint.getMeasuredValue("C") == approx(-25.204317708452, rel=0.001)
     assert getProcess().getAllUnitNames().size() == 0
     set_loop_mode(False)
+
+
+def test_flarestack_with_inlet_stream():
+    relief_fluid = fluid("srk")
+    relief_fluid.addComponent("methane", 1.0)
+
+    clearProcess()
+
+    relief_stream = stream("relief stream", relief_fluid)
+    flare_unit = flarestack("emergency flare", relief_stream)
+
+    assert flare_unit.getReliefInlet().getName() == relief_stream.getName()
+
