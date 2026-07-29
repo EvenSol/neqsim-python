@@ -309,3 +309,17 @@ def testwriteandopen(tmp_path):
     fluid2 = neqsim.open_xml(temp_file)
 
     assert fluid1.getTemperature() == fluid2.getTemperature()
+
+
+def test_unconnected_absorber_wrappers_keep_constructor_names():
+    from neqsim.process import clearProcess
+    from neqsim.process import simpleTEGAbsorber
+    from neqsim.process import waterStripperColumn
+
+    clearProcess()
+
+    absorber = simpleTEGAbsorber("TEG absorber")
+    stripper = waterStripperColumn("TEG stripper")
+
+    assert absorber.getName() == "TEG absorber"
+    assert stripper.getName() == "TEG stripper"

@@ -4259,7 +4259,6 @@ def GORfitter(name, teststream):
 
 def simpleTEGAbsorber(name):
     absorber = jneqsim.process.equipment.absorber.SimpleTEGAbsorber(name)
-    absorber.setName(name)
     if not _loop_mode:
         processoperations.add(absorber)
     return absorber
@@ -4267,7 +4266,6 @@ def simpleTEGAbsorber(name):
 
 def waterStripperColumn(name):
     stripper = jneqsim.process.equipment.absorber.WaterStripperColumn(name)
-    stripper.setName(name)
     if not _loop_mode:
         processoperations.add(stripper)
     return stripper
