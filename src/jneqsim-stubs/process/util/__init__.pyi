@@ -18,6 +18,7 @@ import jneqsim.process.equipment.valve
 import jneqsim.process.measurementdevice
 import jneqsim.process.processmodel
 import jneqsim.process.processmodel.dexpi
+import jneqsim.process.util.combustion
 import jneqsim.process.util.event
 import jneqsim.process.util.exergy
 import jneqsim.process.util.export
@@ -107,6 +108,7 @@ class __module_protocol__(Protocol):
 
     DualEosComparison: typing.Type[DualEosComparison]
     DynamicProcessHelper: typing.Type[DynamicProcessHelper]
+    combustion: jneqsim.process.util.combustion.__module_protocol__
     event: jneqsim.process.util.event.__module_protocol__
     exergy: jneqsim.process.util.exergy.__module_protocol__
     export: jneqsim.process.util.export.__module_protocol__

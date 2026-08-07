@@ -10,6 +10,10 @@ import typing
 
 
 
+class BandedLinearSystemSolver:
+    @staticmethod
+    def solve(doubleArray: typing.Union[typing.List[typing.MutableSequence[float]], jpype.JArray], int: int, int2: int, doubleArray2: typing.Union[typing.List[float], jpype.JArray]) -> typing.MutableSequence[float]: ...
+
 class TDMAsolve:
     @staticmethod
     def solve(doubleArray: typing.Union[typing.List[float], jpype.JArray], doubleArray2: typing.Union[typing.List[float], jpype.JArray], doubleArray3: typing.Union[typing.List[float], jpype.JArray], doubleArray4: typing.Union[typing.List[float], jpype.JArray]) -> typing.MutableSequence[float]: ...
@@ -18,4 +22,5 @@ class TDMAsolve:
 class __module_protocol__(Protocol):
     # A module protocol which reflects the result of ``jp.JPackage("jneqsim.mathlib.generalmath")``.
 
+    BandedLinearSystemSolver: typing.Type[BandedLinearSystemSolver]
     TDMAsolve: typing.Type[TDMAsolve]

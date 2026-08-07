@@ -10,6 +10,7 @@ import jneqsim.process.fielddevelopment.economics
 import jneqsim.process.fielddevelopment.evaluation
 import jneqsim.process.fielddevelopment.facility
 import jneqsim.process.fielddevelopment.integrated
+import jneqsim.process.fielddevelopment.lifecycle
 import jneqsim.process.fielddevelopment.network
 import jneqsim.process.fielddevelopment.reporting
 import jneqsim.process.fielddevelopment.reservoir
@@ -28,6 +29,7 @@ class __module_protocol__(Protocol):
     evaluation: jneqsim.process.fielddevelopment.evaluation.__module_protocol__
     facility: jneqsim.process.fielddevelopment.facility.__module_protocol__
     integrated: jneqsim.process.fielddevelopment.integrated.__module_protocol__
+    lifecycle: jneqsim.process.fielddevelopment.lifecycle.__module_protocol__
     network: jneqsim.process.fielddevelopment.network.__module_protocol__
     reporting: jneqsim.process.fielddevelopment.reporting.__module_protocol__
     reservoir: jneqsim.process.fielddevelopment.reservoir.__module_protocol__

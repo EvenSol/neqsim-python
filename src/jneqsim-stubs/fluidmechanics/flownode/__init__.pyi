@@ -22,6 +22,10 @@ import typing
 
 
 
+class DispersedPhaseSlipCalculator:
+    @staticmethod
+    def terminalVelocityMagnitude(double: float, double2: float, double3: float, double4: float) -> float: ...
+
 class FlowNodeInterface(java.lang.Cloneable):
     def calcFluxes(self) -> None: ...
     def calcNusseltNumber(self, double: float, int: int) -> float: ...
@@ -398,6 +402,7 @@ class FlowNode(FlowNodeInterface, jneqsim.thermo.ThermodynamicConstantsInterface
 class __module_protocol__(Protocol):
     # A module protocol which reflects the result of ``jp.JPackage("jneqsim.fluidmechanics.flownode")``.
 
+    DispersedPhaseSlipCalculator: typing.Type[DispersedPhaseSlipCalculator]
     FlowNode: typing.Type[FlowNode]
     FlowNodeInterface: typing.Type[FlowNodeInterface]
     FlowNodeSelector: typing.Type[FlowNodeSelector]

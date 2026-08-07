@@ -22,6 +22,7 @@ import jneqsim.process.design
 import jneqsim.process.diagnostics
 import jneqsim.process.dynamics
 import jneqsim.process.electricaldesign
+import jneqsim.process.engineering
 import jneqsim.process.equipment
 import jneqsim.process.examples
 import jneqsim.process.fastsimulation
@@ -29,11 +30,13 @@ import jneqsim.process.fielddevelopment
 import jneqsim.process.hydrogen
 import jneqsim.process.instrumentdesign
 import jneqsim.process.integration
+import jneqsim.process.lng
 import jneqsim.process.logic
 import jneqsim.process.materials
 import jneqsim.process.measurementdevice
 import jneqsim.process.mechanicaldesign
 import jneqsim.process.ml
+import jneqsim.process.modelpackage
 import jneqsim.process.mpc
 import jneqsim.process.operations
 import jneqsim.process.optimization
@@ -109,6 +112,7 @@ class __module_protocol__(Protocol):
     diagnostics: jneqsim.process.diagnostics.__module_protocol__
     dynamics: jneqsim.process.dynamics.__module_protocol__
     electricaldesign: jneqsim.process.electricaldesign.__module_protocol__
+    engineering: jneqsim.process.engineering.__module_protocol__
     equipment: jneqsim.process.equipment.__module_protocol__
     examples: jneqsim.process.examples.__module_protocol__
     fastsimulation: jneqsim.process.fastsimulation.__module_protocol__
@@ -116,11 +120,13 @@ class __module_protocol__(Protocol):
     hydrogen: jneqsim.process.hydrogen.__module_protocol__
     instrumentdesign: jneqsim.process.instrumentdesign.__module_protocol__
     integration: jneqsim.process.integration.__module_protocol__
+    lng: jneqsim.process.lng.__module_protocol__
     logic: jneqsim.process.logic.__module_protocol__
     materials: jneqsim.process.materials.__module_protocol__
     measurementdevice: jneqsim.process.measurementdevice.__module_protocol__
     mechanicaldesign: jneqsim.process.mechanicaldesign.__module_protocol__
     ml: jneqsim.process.ml.__module_protocol__
+    modelpackage: jneqsim.process.modelpackage.__module_protocol__
     mpc: jneqsim.process.mpc.__module_protocol__
     operations: jneqsim.process.operations.__module_protocol__
     optimization: jneqsim.process.optimization.__module_protocol__

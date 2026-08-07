@@ -23,6 +23,7 @@ import jneqsim.thermo.util.readwrite
 import jneqsim.thermo.util.referenceequations
 import jneqsim.thermo.util.spanwagner
 import jneqsim.thermo.util.steam
+import jneqsim.thermo.util.sulfur
 import typing
 
 
@@ -97,3 +98,4 @@ class __module_protocol__(Protocol):
     referenceequations: jneqsim.thermo.util.referenceequations.__module_protocol__
     spanwagner: jneqsim.thermo.util.spanwagner.__module_protocol__
     steam: jneqsim.thermo.util.steam.__module_protocol__
+    sulfur: jneqsim.thermo.util.sulfur.__module_protocol__

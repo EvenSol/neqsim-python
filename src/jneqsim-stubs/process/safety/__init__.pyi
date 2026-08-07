@@ -40,7 +40,9 @@ import jneqsim.process.safety.release
 import jneqsim.process.safety.risk
 import jneqsim.process.safety.rupture
 import jneqsim.process.safety.scenario
+import jneqsim.process.safety.selfheating
 import jneqsim.process.safety.settleout
+import jneqsim.process.safety.sif
 import jneqsim.process.safety.vacuum
 import jneqsim.process.safety.vibration
 import typing
@@ -267,6 +269,8 @@ class __module_protocol__(Protocol):
     risk: jneqsim.process.safety.risk.__module_protocol__
     rupture: jneqsim.process.safety.rupture.__module_protocol__
     scenario: jneqsim.process.safety.scenario.__module_protocol__
+    selfheating: jneqsim.process.safety.selfheating.__module_protocol__
     settleout: jneqsim.process.safety.settleout.__module_protocol__
+    sif: jneqsim.process.safety.sif.__module_protocol__
     vacuum: jneqsim.process.safety.vacuum.__module_protocol__
     vibration: jneqsim.process.safety.vibration.__module_protocol__

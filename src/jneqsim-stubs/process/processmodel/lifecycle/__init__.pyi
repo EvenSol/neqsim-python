@@ -14,6 +14,7 @@ import jpype.protocol
 import jneqsim.process.equipment
 import jneqsim.process.equipment.stream
 import jneqsim.process.processmodel
+import jneqsim.process.processmodel.lifecycle.event
 import jneqsim.thermo.system
 import typing
 
@@ -330,3 +331,4 @@ class __module_protocol__(Protocol):
     ModelMetadata: typing.Type[ModelMetadata]
     ProcessModelState: typing.Type[ProcessModelState]
     ProcessSystemState: typing.Type[ProcessSystemState]
+    event: jneqsim.process.processmodel.lifecycle.event.__module_protocol__
