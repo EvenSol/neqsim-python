@@ -56,8 +56,9 @@ default-groups = "all"
 [tool.uv.build-backend]
 # Allow namespace packages to include both neqsim and jneqsim-stubs
 namespace = true
-# Include the stub package in distributions using glob patterns
+# Include the license and stub package in source distributions.
 source-include = [
+    "LICENSE",
     "src/jneqsim-stubs/**",
     "src/jpype-stubs/**",
     "src/neqsim/**/*.pyi",
