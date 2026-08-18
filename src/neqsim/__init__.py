@@ -30,6 +30,23 @@ def setDatabase(connectionString):
     jneqsim.util.database.NeqSimDataBase.setCreateTemporaryTables(True)
 
 
+def _register_identity_map_converter(xstream):
+    """
+    Teach an XStream instance how to handle ``java.util.IdentityHashMap``.
+
+    XStream ships no converter for ``IdentityHashMap`` and falls back to
+    reflection, which the JDK module system blocks (``java.base`` does not open
+    ``java.util`` to the unnamed module). NeqSim process models hold
+    ``IdentityHashMap`` instances, so the standard map converter is bound to
+    that type instead.
+    """
+    MapConverter = jpype.JClass(
+        "com.thoughtworks.xstream.converters.collections.MapConverter"
+    )
+    IdentityHashMap = jpype.JClass("java.util.IdentityHashMap")
+    xstream.registerConverter(MapConverter(xstream.getMapper(), IdentityHashMap.class_))
+
+
 def save_neqsim(javaobject, filename):
     """
     Save a NEQSim Java object as a compressed ZIP file with any filename and extension.
@@ -53,6 +70,7 @@ def save_neqsim(javaobject, filename):
         # Setup XStream
         xstream = XStream()
         xstream.allowTypesByWildcard(["neqsim.**"])
+        _register_identity_map_converter(xstream)
 
         # Prepare file output
         file = File(filename)
@@ -117,6 +135,7 @@ def open_neqsim(filename):
 
         xstream = XStream()
         xstream.addPermission(AnyTypePermission.ANY)
+        _register_identity_map_converter(xstream)
 
         javaobject = xstream.fromXML(reader)
         return javaobject
