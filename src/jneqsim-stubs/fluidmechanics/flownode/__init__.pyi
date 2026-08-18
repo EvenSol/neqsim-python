@@ -5,6 +5,7 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Protocol
 
+import java.io
 import java.lang
 import jpype
 import jneqsim.fluidmechanics.flownode.fluidboundary
@@ -126,7 +127,7 @@ class FlowNodeInterface(java.lang.Cloneable):
     def updateMolarFlow(self) -> None: ...
     def write(self, string: typing.Union[java.lang.String, str], string2: typing.Union[java.lang.String, str], boolean: bool) -> None: ...
 
-class FlowNodeSelector:
+class FlowNodeSelector(java.io.Serializable):
     def __init__(self): ...
     def getFlowNodeType(self, flowNodeInterfaceArray: typing.Union[typing.List[FlowNodeInterface], jpype.JArray]) -> None: ...
     def setFlowPattern(self, flowNodeInterfaceArray: typing.Union[typing.List[FlowNodeInterface], jpype.JArray], string: typing.Union[java.lang.String, str]) -> None: ...

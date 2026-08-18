@@ -5,6 +5,7 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Protocol
 
+import java.io
 import java.lang
 import java.util
 import jneqsim.fluidmechanics.geometrydefinitions.surrounding
@@ -12,7 +13,7 @@ import typing
 
 
 
-class MaterialLayer:
+class MaterialLayer(java.io.Serializable):
     @typing.overload
     def __init__(self): ...
     @typing.overload
@@ -149,7 +150,7 @@ class WallInterface:
     def addMaterialLayer(self, materialLayer: MaterialLayer) -> None: ...
     def getWallMaterialLayer(self, int: int) -> MaterialLayer: ...
 
-class Wall(WallInterface):
+class Wall(WallInterface, java.io.Serializable):
     def __init__(self): ...
     def addMaterialLayer(self, materialLayer: MaterialLayer) -> None: ...
     def calcHeatTransferCoefficient(self) -> float: ...

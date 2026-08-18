@@ -52,7 +52,8 @@ import typing
 
 
 
-class ProcessElementInterface(jneqsim.util.NamedInterface, java.io.Serializable): ...
+class ProcessElementInterface(jneqsim.util.NamedInterface, java.io.Serializable):
+    def getDynamicCapability(self) -> jneqsim.process.dynamics.DynamicCapability: ...
 
 class SimulationInterface(jneqsim.util.NamedInterface, java.lang.Runnable, java.io.Serializable):
     def getCalculateSteadyState(self) -> bool: ...

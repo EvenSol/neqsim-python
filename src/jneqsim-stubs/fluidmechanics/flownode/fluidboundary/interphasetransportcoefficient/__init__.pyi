@@ -5,6 +5,7 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Protocol
 
+import java.io
 import jneqsim.fluidmechanics.flownode
 import jneqsim.fluidmechanics.flownode.fluidboundary.interphasetransportcoefficient.interphaseonephase
 import jneqsim.fluidmechanics.flownode.fluidboundary.interphasetransportcoefficient.interphasetwophase
@@ -26,7 +27,7 @@ class InterphaseTransportCoefficientInterface:
     def calcWallHeatTransferCoefficient(self, int: int, flowNodeInterface: jneqsim.fluidmechanics.flownode.FlowNodeInterface) -> float: ...
     def calcWallMassTransferCoefficient(self, int: int, double: float, flowNodeInterface: jneqsim.fluidmechanics.flownode.FlowNodeInterface) -> float: ...
 
-class InterphaseTransportCoefficientBaseClass(InterphaseTransportCoefficientInterface):
+class InterphaseTransportCoefficientBaseClass(InterphaseTransportCoefficientInterface, java.io.Serializable):
     @typing.overload
     def __init__(self): ...
     @typing.overload

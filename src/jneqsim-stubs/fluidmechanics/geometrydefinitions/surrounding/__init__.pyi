@@ -5,6 +5,7 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Protocol
 
+import java.io
 import java.lang
 import jneqsim.fluidmechanics.geometrydefinitions.internalgeometry.wall
 import typing
@@ -17,7 +18,7 @@ class SurroundingEnvironment:
     def setHeatTransferCoefficient(self, double: float) -> None: ...
     def setTemperature(self, double: float) -> None: ...
 
-class SurroundingEnvironmentBaseClass(SurroundingEnvironment):
+class SurroundingEnvironmentBaseClass(SurroundingEnvironment, java.io.Serializable):
     def __init__(self): ...
     def getHeatTransferCoefficient(self) -> float: ...
     def getTemperature(self) -> float: ...

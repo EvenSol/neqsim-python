@@ -5,12 +5,13 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Protocol
 
+import java.io
 import java.lang
 import typing
 
 
 
-class DoubleCloneable(java.lang.Cloneable):
+class DoubleCloneable(java.lang.Cloneable, java.io.Serializable):
     @typing.overload
     def __init__(self): ...
     @typing.overload
