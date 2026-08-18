@@ -1,8 +1,11 @@
 name: Generate Java Stubs
 
 on:
-  # Run when JAR files are updated
+  # Run when JAR files are updated (branch pushes only - a tag push cannot be
+  # committed back to)
   push:
+    branches:
+      - '**'
     paths:
       - 'src/neqsim/lib/*.jar'
   # Run on release
@@ -18,9 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          # Check out the branch (not a detached HEAD SHA) so the
-          # auto-commit step below has a branch to push back to.
-          ref: ${{ github.head_ref || github.ref_name }}
+          # Check out a branch (not a detached HEAD SHA or tag) so the
+          # auto-commit step below has a branch to push back to. On a release
+          # event github.ref_name is the tag, so fall back to the default branch.
+          ref: ${{ (github.event_name == 'release' && github.event.repository.default_branch) || github.head_ref || github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v6
