@@ -16,3 +16,7 @@ repos:
     rev: 26.5.1
     hooks:
     -   id: black
+        # Match the blocking Black command in runtests.yml. Generated Java
+        # stubs can contain identifiers that are not valid Python syntax and
+        # must not be reformatted as hand-written Python source.
+        files: ^(src/neqsim|tests)/.*\.py$
