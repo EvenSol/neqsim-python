@@ -62,6 +62,7 @@ printFrame(natural_gas)
 ## Maintainer Checklist
 
 - Confirm `pyproject.toml` and `conda/meta.yaml` use this version.
-- Confirm the bundled JAR at `src/neqsim/lib/neqsim-<version>.jar` matches this version.
+- Confirm the bundled JAR version. For a Python-only patch release, record the
+  unchanged engine version explicitly in these release notes.
 - Run the relevant tests or packaging checks before publishing.
 - Publish the GitHub release only when ready to trigger the PyPI release workflow.

@@ -27,7 +27,9 @@ uv run pytest -p no:faulthandler                            # full test suite
 ## Release Process
 
 1. Update the release version in `pyproject.toml` and `conda/meta.yaml`.
-2. Update the bundled NeqSim JAR file at `src/neqsim/lib/neqsim-<version>.jar` (Java 17+ only).
+2. Update the bundled NeqSim JAR file at `src/neqsim/lib/neqsim-<version>.jar`
+   for an engine release (Java 17+ only). A Python-only patch release may keep
+   the existing JAR; record its engine version explicitly in the release notes.
 3. Draft the GitHub release body from `.github/RELEASE_TEMPLATE.md`, keeping the installation and quick-start sections in the release notes.
 4. Use GitHub's generated release notes to include categorized pull requests. The categories are configured in `.github/release.yml`.
 5. Publish the GitHub release only when ready. A published release triggers the PyPI publishing workflow and the Java stub generation workflow.

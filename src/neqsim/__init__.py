@@ -4,6 +4,10 @@ This module is a Python interface to the NeqSim Java library.
 It uses the Jpype module for bridging python and Java.
 """
 
+import os
+import tempfile
+from pathlib import Path
+
 from neqsim.neqsimpython import jneqsim, jpype
 
 
@@ -51,13 +55,25 @@ def save_neqsim(javaobject, filename):
     """
     Save a NEQSim Java object as a compressed ZIP file with any filename and extension.
     Inside, the XML will be stored as 'process.xml'.
+
+    The archive is written to a temporary file in the destination directory and
+    atomically moved into place only after serialization and ZIP finalization
+    succeed. A failed save therefore leaves any existing destination untouched.
     """
     if not jpype.isJVMStarted():
         raise RuntimeError(
             "JVM is not started. Please start the JVM with the correct classpath."
         )
 
+    destination: Path
+    temporary_path: Path | None = None
+    fout = None
+    zout = None
+    writer = None
+
     try:
+        destination = Path(filename)
+
         # Java imports
         XStream = jpype.JClass("com.thoughtworks.xstream.XStream")
         FileOutputStream = jpype.JClass("java.io.FileOutputStream")
@@ -72,8 +88,18 @@ def save_neqsim(javaobject, filename):
         xstream.allowTypesByWildcard(["neqsim.**"])
         _register_identity_map_converter(xstream)
 
-        # Prepare file output
-        file = File(filename)
+        # Write beside the destination so os.replace remains atomic.
+        temporary_file = tempfile.NamedTemporaryFile(
+            prefix=f".{destination.name}.",
+            suffix=".tmp",
+            dir=destination.parent,
+            delete=False,
+        )
+        temporary_path = Path(temporary_file.name)
+        temporary_file.close()
+
+        # Prepare temporary file output
+        file = File(str(temporary_path))
         fout = BufferedOutputStream(FileOutputStream(file))
         zout = ZipOutputStream(fout)
 
@@ -88,13 +114,33 @@ def save_neqsim(javaobject, filename):
 
         zout.closeEntry()
         writer.close()
-        zout.close()
+        writer = None
+        zout = None
+        fout = None
+
+        os.replace(temporary_path, destination)
+        temporary_path = None
 
         return True
 
     except Exception as e:
         print(f"[save_neqsim] Error saving file: {e}")
         return False
+
+    finally:
+        # Closing may itself fail after a serialization error; preserve the
+        # original failure and make a best effort to remove the partial file.
+        for stream in (writer, zout, fout):
+            if stream is not None:
+                try:
+                    stream.close()
+                except Exception:
+                    pass
+        if temporary_path is not None:
+            try:
+                temporary_path.unlink(missing_ok=True)
+            except Exception as cleanup_error:
+                print(f"[save_neqsim] Cleanup warning: {cleanup_error}")
 
 
 def open_neqsim(filename):
