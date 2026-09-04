@@ -61,7 +61,8 @@ def sanitize_python_local_references(stubs_dir: Path):
         new_content = re.sub(rf"{local_type},\s*", "", new_content)
         new_content = re.sub(local_type, "typing.Protocol", new_content)
         new_content = (
-            "\n".join(line.rstrip() for line in new_content.splitlines()) + "\n"
+            "\n".join(line.rstrip() for line in new_content.splitlines()).rstrip()
+            + "\n"
         )
 
         if new_content != content:

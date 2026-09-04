@@ -7,7 +7,7 @@ def test_sanitize_python_local_references(tmp_path):
         "from jneqsim.display import register.<locals>._StreamDisplay\n"
         "import typing\n\n"
         "class Stream(JavaBase, register.<locals>._StreamDisplay): ...\n"
-        "class DisplayOnly(register.<locals>._StreamDisplay): ...   ",
+        "class DisplayOnly(register.<locals>._StreamDisplay): ...   \n\n",
         encoding="utf-8",
     )
 
