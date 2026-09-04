@@ -5,7 +5,6 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Protocol
 
-from jneqsim.display import register.<locals>._ProcessDisplay
 import com.google.gson
 import java.io
 import java.lang
@@ -832,7 +831,7 @@ class ProcessModuleBaseClass(jneqsim.process.SimulationBaseClass, ModuleInterfac
     @typing.overload
     def toJson(self) -> java.lang.String: ...
 
-class ProcessSystem(jneqsim.process.SimulationBaseClass, register.<locals>._ProcessDisplay):
+class ProcessSystem(jneqsim.process.SimulationBaseClass):
     @typing.overload
     def __init__(self): ...
     @typing.overload
