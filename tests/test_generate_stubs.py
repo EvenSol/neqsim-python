@@ -7,7 +7,7 @@ def test_sanitize_python_local_references(tmp_path):
         "from jneqsim.display import register.<locals>._StreamDisplay\n"
         "import typing\n\n"
         "class Stream(JavaBase, register.<locals>._StreamDisplay): ...\n"
-        "class DisplayOnly(register.<locals>._StreamDisplay): ...\n",
+        "class DisplayOnly(register.<locals>._StreamDisplay): ...   ",
         encoding="utf-8",
     )
 
@@ -17,4 +17,5 @@ def test_sanitize_python_local_references(tmp_path):
     assert "<locals>" not in content
     assert "class Stream(JavaBase): ..." in content
     assert "class DisplayOnly(typing.Protocol): ..." in content
+    assert content.endswith("...\n")
     compile(content, str(stub), "exec")
