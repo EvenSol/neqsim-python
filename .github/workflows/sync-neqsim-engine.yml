@@ -72,17 +72,50 @@ jobs:
           find src/neqsim/lib -maxdepth 1 -type f -name 'neqsim-*.jar' -delete
           mv "${RUNNER_TEMP}/${jar_name}" "src/neqsim/lib/${jar_name}"
 
-      - name: Commit bundled engine
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Regenerate Java API metadata
+        run: |
+          uv sync --group dev
+          uv run python scripts/generate_stubs.py
+          uv run python scripts/generate_api_manifest.py
+          uv run python scripts/generate_component_literals.py
+
+      - name: Commit release artifacts
         env:
           VERSION: ${{ steps.release.outputs.version }}
         run: |
-          if git diff --quiet -- src/neqsim/lib; then
-            echo "Bundled NeqSim JAR is already current."
+          if git diff --quiet -- \
+            src/neqsim/lib \
+            src/jneqsim-stubs \
+            src/jpype-stubs \
+            src/neqsim/data/neqsim_api.json.gz \
+            src/neqsim/thermo/component_names.py \
+            src/neqsim/thermo/component_names.pyi; then
+            echo "Bundled engine and generated API metadata are already current."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A src/neqsim/lib
-          git commit -m "release: bundle NeqSim Java ${VERSION}"
+          git add -A \
+            src/neqsim/lib \
+            src/jneqsim-stubs \
+            src/jpype-stubs \
+            src/neqsim/data/neqsim_api.json.gz \
+            src/neqsim/thermo/component_names.py \
+            src/neqsim/thermo/component_names.pyi
+          git commit -m "release: bundle NeqSim Java ${VERSION} and refresh API metadata"
           git push origin "HEAD:${GITHUB_REF_NAME}"
