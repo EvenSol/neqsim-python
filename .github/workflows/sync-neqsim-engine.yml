@@ -8,6 +8,8 @@ on:
       - ".github/neqsim-engine.sha256"
       - ".github/workflows/sync-neqsim-engine.yml"
       - "pyproject.toml"
+      - "scripts/generate_component_literals.py"
+      - "scripts/generate_stubs.py"
   workflow_dispatch:
     inputs:
       version:
@@ -92,6 +94,7 @@ jobs:
           uv run python scripts/generate_stubs.py
           uv run python scripts/generate_api_manifest.py
           uv run python scripts/generate_component_literals.py
+          uv run python -c 'from pathlib import Path; [compile(path.read_text(encoding="utf-8"), str(path), "exec") for path in Path("src/jneqsim-stubs").rglob("*.pyi")]'
 
       - name: Commit release artifacts
         env:
